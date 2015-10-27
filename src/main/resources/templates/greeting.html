@@ -8,12 +8,18 @@
             src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
 
-    <script>
+    <script th:inline="javascript">
+
+        /*<![CDATA[*/
+        var state = /*[[${name}]]*/ 'value';
+        /*]]>*/
         var callbackFunction = function(data) {
             $(document).ready(function() {
                 var forecast = data.query.results.channel.item.condition;
-                $("#temp").text(forecast.temp);
-                $("#text").text(forecast.text);
+                var temp = (forecast.temp-32)*(5/9);
+
+                $("#temp").text(Math.floor(temp) + "°C ");
+                $("#text").text(forecast.text + " in " + state);
                 $('h1').animate({
                     fontSize: '20em'
                 }, "slow");
@@ -21,7 +27,7 @@
         };
     </script>
 
-    <script src=" https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%27Evry%2C%20France%27)&#38;format=json&#38;env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&#38;callback=callbackFunction"></script>
+    <script th:src="@{https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%27{path}%2C%20France%27)&#38;format=json&#38;env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&#38;callback=callbackFunction(path=${name})}"></script>
 
 
 </head>
@@ -29,8 +35,9 @@
 
 <div id="bg-fullscreen"></div>
 <div id="content">
+
     <h1 id="temp">12°</h1>
-    <h3 id="text">Temps clair </h3>
+    <h3 id="text">Temps clair à <span th:text="${name}"></span> </h3>
     <div class="link">
         <a href="/evry" class="home">Recharger la page</a>
     </div>

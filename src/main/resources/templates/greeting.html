@@ -1,13 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Spring Boot CLI + Javascript</title>
+    <title>Meteo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="/css/global.css" type="text/css"  rel="stylesheet" />
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
-
+    <script type="text/javascript"
+            src="/javascript/global.js"></script>
     <script th:inline="javascript">
 
         /*<![CDATA[*/
@@ -39,7 +40,7 @@
     <h1 id="temp">12°</h1>
     <h3 id="text">Temps clair à <span th:text="${name}"></span> </h3>
     <div class="link">
-        <a href="/evry" class="home">Recharger la page</a>
+        <a href="/Evry" class="home">Voir à Evry</a>
     </div>
 </div>
 
